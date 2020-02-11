@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beceps", "Beceps.csproj", "{036D6951-73EF-4EF0-9A80-BE90BBFE83BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beceps", "Beceps.csproj", "{036D6951-73EF-4EF0-9A80-BE90BBFE83BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27B032D3-1010-4EAF-8B24-DF36AE24F6E9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
