@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Beceps.Workout.Pages
+namespace Beceps.AddWorkouts.AddWorkout
 {
     public class AddWorkoutModel
     {

@@ -1,8 +1,12 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
-    <a class="navbar-brand" href="">Workout</a>
+    <a class="navbar-brand" href="">@Title</a>
     <button class="navbar-toggler back-btn">
             <i class="fas fa-arrow-left text-light" />
     </button>
 </div>
 
+@code {
+    [Parameter]
+    public string Title { get; set; }
+}
 
