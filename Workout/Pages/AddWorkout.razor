@@ -1,0 +1,23 @@
+﻿@page "/workouts/add/workout"
+
+    <EditForm Model="@addWorkoutModel" OnValidSubmit="HandleValidSubmit" class="mt-3 px-4">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="workoutName">Name</label>
+            <InputText class="form-control form-control-lg" type="text" id="workoutName" @bind-Value="addWorkoutModel.Name"/>
+        </div>
+        <ValidationSummary />
+
+        <div class="text-center submit-btn">
+            <button type="submit" class="btn btn-primary btn-xlg">Continue</button>
+        </div>
+    </EditForm>
+
+@code{
+    private AddWorkoutModel addWorkoutModel = new AddWorkoutModel();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("Yaay");
+    }
+}
