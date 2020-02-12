@@ -1,7 +1,8 @@
-﻿@page "/workouts/add/workout"
+﻿@page "/"
+@inject NavigationManager LocalNavigationManager
 
 <div class="sidebar">
-    <Header Title="Workout"/>
+    <Header Title="Workout" />
 </div>
 
 <EditForm Model="@addWorkoutModel" OnValidSubmit="HandleValidSubmit">
@@ -23,5 +24,6 @@
     private void HandleValidSubmit()
     {
         Console.WriteLine("Yaay");
+        LocalNavigationManager.NavigateTo("/workouts/add/routine");
     }
 }

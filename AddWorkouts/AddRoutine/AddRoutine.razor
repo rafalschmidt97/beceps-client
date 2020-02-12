@@ -1,4 +1,6 @@
 ﻿@page "/workouts/add/routine"
+@inject NavigationManager LocalNavigationManager
+
 
 <div class="sidebar">
     <Header Title="Routine" />
@@ -9,7 +11,7 @@
     <div class="form-group">
         <label for="routineName">Name</label>
         <InputText class="form-control form-control-lg" @bind-Value="addRoutineModel.Name" />
-        <ValidationMessage For="@(() => addRoutineModel.Name)"/>
+        <ValidationMessage For="@(() => addRoutineModel.Name)" />
     </div>
 
     <div class="form-group mt-5">
@@ -44,5 +46,6 @@
         Console.WriteLine(addRoutineModel.Name);
         Console.WriteLine(addRoutineModel.WeekDay);
         Console.WriteLine("yooo");
+        LocalNavigationManager.NavigateTo("/workouts/add/set");
     }
 }
