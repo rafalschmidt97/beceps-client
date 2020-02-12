@@ -1,0 +1,48 @@
+﻿@page "/workouts/add/routine"
+
+<div class="sidebar">
+    <Header Title="Routine" />
+</div>
+
+<EditForm Model="@addRoutineModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="routineName">Name</label>
+        <InputText class="form-control form-control-lg" type="text" id="routineName" @bind-Value="addRoutineModel.Name" />
+        <ValidationMessage For="@(() => addRoutineModel.Name)"/>
+    </div>
+
+    <div class="form-group mt-5">
+        <label for="routineWeekDay">Day of the week</label>
+        <InputSelect id="@nameof(addRoutineModel.WeekDay)" @bind-Value="@addRoutineModel.WeekDay" class="custom-select custom-select-lg">
+            <option value="@(DayOfWeek.Monday)">Monday</option>
+            <option value="@(DayOfWeek.Tuesday)">Tuesday</option>
+            <option value="@(DayOfWeek.Wednesday)">Wednesday</option>
+            <option value="@(DayOfWeek.Thursday)">Thursday</option>
+            <option value="@(DayOfWeek.Friday)">Friday</option>
+            <option value="@(DayOfWeek.Saturday)">Saturday</option>
+            <option value="@(DayOfWeek.Sunday)">Sunday</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => addRoutineModel.WeekDay)" />
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Add or Continue">
+        <div class="half">
+            <button type="submit" class="btn btn-xlg btn-warning w-100">Add</button>
+        </div>
+        <div class="half">
+            <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private AddRoutineModel addRoutineModel = new AddRoutineModel();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine(addRoutineModel.Name);
+        Console.WriteLine(addRoutineModel.WeekDay);
+        Console.WriteLine("yooo");
+    }
+}
