@@ -6,10 +6,10 @@ body {
 }
 
 form {
-    padding-top: 2rem;
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-    margin-top: 1rem !important;
+  padding-top: 2rem;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+  margin-top: 1rem !important;
 }
 
 .form-group label {
@@ -144,15 +144,15 @@ app {
 }
 
 form .btn-group {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 div.half {
-    width: 50%;
-    text-align: center;
+  width: 50%;
+  text-align: center;
 }
 
 .submit-btn {

@@ -8,7 +8,7 @@
     <DataAnnotationsValidator />
     <div class="form-group">
         <label for="routineName">Name</label>
-        <InputText class="form-control form-control-lg" type="text" id="routineName" @bind-Value="addRoutineModel.Name" />
+        <InputText class="form-control form-control-lg" @bind-Value="addRoutineModel.Name" />
         <ValidationMessage For="@(() => addRoutineModel.Name)"/>
     </div>
 
