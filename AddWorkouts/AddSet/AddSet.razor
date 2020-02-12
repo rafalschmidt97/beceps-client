@@ -1,0 +1,48 @@
+﻿@page "/"
+
+<div class="sidebar">
+    <Header Title="Routine" />
+</div>
+
+<EditForm Model="@addSetModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="setName">Name</label>
+        <InputText class="form-control form-control-lg" type="text" @bind-Value="addSetModel.Name" />
+        <ValidationMessage For="@(() => addSetModel.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="numberOfSets">Number of sets</label>
+        <InputNumber class="form-control form-control-lg" @bind-Value="addSetModel.NumberOfSets" />
+        <ValidationMessage For="@(() => addSetModel.NumberOfSets)" />
+    </div>
+
+    <div class="form-group">
+        <label for="numberOfReps">Number of reps</label>
+        <InputNumber class="form-control form-control-lg" @bind-Value="addSetModel.NumberOfReps" />
+        <ValidationMessage For="@(() => addSetModel.NumberOfReps)" />
+    </div>
+
+
+    <div class="btn-group" role="group" aria-label="Add or Continue">
+        <div class="half">
+            <button type="submit" class="btn btn-xlg btn-warning w-100">Add</button>
+        </div>
+        <div class="half">
+            <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private AddSetModel addSetModel = new AddSetModel();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine(addSetModel.Name);
+        Console.WriteLine(addSetModel.NumberOfSets);
+        Console.WriteLine(addSetModel.NumberOfReps);
+        Console.WriteLine("yooo");
+    }
+}
