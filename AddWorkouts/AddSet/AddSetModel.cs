@@ -5,7 +5,7 @@ namespace Beceps.AddWorkouts.AddSet
     public class AddSetModel
     {
         [Required]
-        [StringLength(25, ErrorMessage = "Name is too long.")]
+        [StringLength(30, ErrorMessage = "Name is too long.")]
         public string Name { get; set; }
         [Required]
         [Range(0, 10)]

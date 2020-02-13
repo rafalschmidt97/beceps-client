@@ -6,7 +6,7 @@ namespace Beceps.AddWorkouts.AddRoutine
     public class AddRoutineModel
     {
         [Required]
-        [StringLength(25, ErrorMessage = "Name is too long.")]
+        [StringLength(30, ErrorMessage = "Name is too long.")]
         public string Name { get; set; }
 
         [Required]
