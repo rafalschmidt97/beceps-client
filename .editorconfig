@@ -2,3 +2,6 @@
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = error
+
+# CA1040: Avoid empty interfaces
+dotnet_diagnostic.CA1040.severity = none
