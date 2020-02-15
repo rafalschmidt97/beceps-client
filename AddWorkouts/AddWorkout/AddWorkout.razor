@@ -1,0 +1,44 @@
+﻿@page "/workouts/add/workout"
+@using Beceps.Utilities
+@inject HttpClient Http
+@inject NavigationManager LocalNavigationManager
+@inject IWorkoutState WorkoutState
+
+<div class="sidebar">
+    <Header Title="Workout" />
+</div>
+
+<EditForm Model="@addWorkoutModel" OnValidSubmit="Continue">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="workoutName">Name</label>
+        <InputText class="form-control form-control-lg" @bind-Value="addWorkoutModel.Name" />
+        <ValidationSummary />
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Add or Continue">
+        <div class="half">
+            <button class="btn btn-xlg btn-warning w-100" @onclick="Finish">Finish</button>
+        </div>
+        <div class="half">
+            <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
+        </div>
+    </div>
+</EditForm>
+
+@code{
+    private AddWorkoutModel addWorkoutModel = new AddWorkoutModel();
+
+    private async Task Continue()
+    {
+        var workoutResponse = await Http.Post<AddWorkoutResponse>("workouts", addWorkoutModel);
+        WorkoutState.WorkoutId = workoutResponse.WorkoutId;
+        LocalNavigationManager.NavigateTo("/workouts/add/routine");
+    }
+
+    public void Finish()
+    {
+        Console.WriteLine("We're done here boys workouts");
+        //LocalNavigationManager.NavigateTo("/home");
+    }
+}

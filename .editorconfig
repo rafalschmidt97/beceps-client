@@ -2,3 +2,18 @@
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = error
+
+# CA1040: Avoid empty interfaces
+dotnet_diagnostic.CA1040.severity = none
+
+# CA2007: Consider calling ConfigureAwait on the awaited task
+dotnet_diagnostic.CA2007.severity = none
+
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = none
+
+# CA2227: Collection properties should be read only
+dotnet_diagnostic.CA2227.severity = none
+
+# CA1054: Uri parameters should not be strings
+dotnet_diagnostic.CA1054.severity = none

@@ -1,0 +1,61 @@
+﻿@page "/workouts/add/routine"
+@using Beceps.Utilities
+@inject HttpClient Http
+@inject NavigationManager LocalNavigationManager
+@inject IWorkoutState WorkoutState
+
+
+<div class="sidebar">
+    <Header Title="Routine" />
+</div>
+
+<EditForm Model="@addRoutineModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="routineName">Name</label>
+        <InputText class="form-control form-control-lg" @bind-Value="addRoutineModel.Name" />
+        <ValidationMessage For="@(() => addRoutineModel.Name)" />
+    </div>
+
+    <div class="form-group mt-5">
+        <label for="routineWeekDay">Day of the week</label>
+        <InputSelect id="@nameof(addRoutineModel.WeekDay)" @bind-Value="@addRoutineModel.WeekDay" class="custom-select custom-select-lg">
+            <option value="@(WeekDay.Monday)">Monday</option>
+            <option value="@(WeekDay.Tuesday)">Tuesday</option>
+            <option value="@(WeekDay.Wednesday)">Wednesday</option>
+            <option value="@(WeekDay.Thursday)">Thursday</option>
+            <option value="@(WeekDay.Friday)">Friday</option>
+            <option value="@(WeekDay.Saturday)">Saturday</option>
+            <option value="@(WeekDay.Sunday)">Sunday</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => addRoutineModel.WeekDay)" />
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Add or Continue">
+        <div class="half">
+            <button class="btn btn-xlg btn-warning w-100" @onclick="Finish">Finish</button>
+        </div>
+        <div class="half">
+            <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private AddRoutineModel addRoutineModel = new AddRoutineModel();
+
+    private async Task HandleValidSubmit()
+    {
+        var addRoutineRequest = new AddRoutineRequest(addRoutineModel.Name, (int)addRoutineModel.WeekDay, WorkoutState.WorkoutId);
+        var addRoutineResponse = await Http.Post<WorkoutState>("routines", addRoutineRequest);
+        WorkoutState.RoutineId = addRoutineResponse.RoutineId;
+        Console.WriteLine(WorkoutState);
+        LocalNavigationManager.NavigateTo("/workouts/add/set");
+    }
+
+    public void Finish()
+    {
+        Console.WriteLine("We're done here boys routines");
+        LocalNavigationManager.NavigateTo("/");
+    }
+}

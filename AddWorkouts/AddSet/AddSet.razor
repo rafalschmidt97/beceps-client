@@ -1,0 +1,57 @@
+﻿@page "/workouts/add/set"
+@using Beceps.Utilities
+@inject HttpClient Http
+@inject NavigationManager LocalNavigationManager
+@inject IWorkoutState WorkoutState
+
+<div class="sidebar">
+    <Header Title="Sets" />
+</div>
+
+<EditForm Model="@addSetModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="setName">Name</label>
+        <InputText class="form-control form-control-lg" type="text" @bind-Value="addSetModel.Name" />
+        <ValidationMessage For="@(() => addSetModel.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="numberOfSets">Number of sets</label>
+        <InputNumber class="form-control form-control-lg" @bind-Value="addSetModel.SetsAmount" />
+        <ValidationMessage For="@(() => addSetModel.SetsAmount)" />
+    </div>
+
+    <div class="form-group">
+        <label for="numberOfReps">Number of reps</label>
+        <InputNumber class="form-control form-control-lg" @bind-Value="addSetModel.RepsAmount" />
+        <ValidationMessage For="@(() => addSetModel.RepsAmount)" />
+    </div>
+
+
+    <div class="btn-group" role="group" aria-label="Add or Continue">
+        <div class="half">
+            <button class="btn btn-xlg btn-warning w-100" @onclick="Finish">Finish</button>
+        </div>
+        <div class="half">
+            <button type="submit" class="btn btn-xlg btn-primary w-100">Add</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private AddSetModel addSetModel = new AddSetModel();
+
+    private async Task HandleValidSubmit()
+    {
+        var addSetRequest = new AddSetRequest(addSetModel.Name, addSetModel.SetsAmount, addSetModel.RepsAmount, WorkoutState.RoutineId);
+        await Http.Post<AddSetResponse>("sets", addSetRequest);
+        addSetModel.Reset();
+    }
+
+    public void Finish()
+    {
+        Console.WriteLine("We're done here boys sets");
+        LocalNavigationManager.NavigateTo("/workouts/add/routine");
+    }
+}

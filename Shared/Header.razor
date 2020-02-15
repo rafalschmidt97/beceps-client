@@ -1,8 +1,19 @@
-﻿<div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
-    <a class="navbar-brand" href="">Workout</a>
-    <button class="navbar-toggler back-btn">
-            <i class="fas fa-arrow-left text-light" />
+﻿@inject IJSRuntime JSRuntime;
+
+<div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
+    <a class="navbar-brand" href="">@Title</a>
+    <button class="navbar-toggler back-btn" @onclick="GoBack">
+        <i class="fas fa-arrow-left text-light" />
     </button>
 </div>
 
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    public async Task GoBack()
+    {
+        await JSRuntime.InvokeAsync<object>("test.historyGo", -1);
+    }
+}
 
