@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Beceps.Shared;
 using System.ComponentModel.DataAnnotations;
 
 namespace Beceps.AddWorkouts.AddRoutine
@@ -10,6 +10,7 @@ namespace Beceps.AddWorkouts.AddRoutine
         public string Name { get; set; }
 
         [Required]
-        public DayOfWeek WeekDay { get; set; }
+        [Range(1,7, ErrorMessage = "Please choose a day.")]
+        public WeekDay WeekDay { get; set; }
     }
 }

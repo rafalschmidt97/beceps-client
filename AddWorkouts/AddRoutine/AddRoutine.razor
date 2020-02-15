@@ -1,5 +1,8 @@
-@page "/workouts/add/routine"
+﻿@page "/workouts/add/routine"
+@using Beceps.Utilities
+@inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
+@inject IWorkoutState WorkoutState
 
 
 <div class="sidebar">
@@ -30,7 +33,7 @@
 
     <div class="btn-group" role="group" aria-label="Add or Continue">
         <div class="half">
-            <button type="submit" class="btn btn-xlg btn-warning w-100">Add</button>
+            <button class="btn btn-xlg btn-warning w-100" @onclick="Finish">Finish</button>
         </div>
         <div class="half">
             <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
@@ -41,11 +44,18 @@
 @code {
     private AddRoutineModel addRoutineModel = new AddRoutineModel();
 
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
-        Console.WriteLine(addRoutineModel.Name);
-        Console.WriteLine(addRoutineModel.WeekDay);
-        Console.WriteLine("yooo");
+        var addRoutineRequest = new AddRoutineRequest(addRoutineModel.Name, (int)addRoutineModel.WeekDay, WorkoutState.WorkoutId);
+        var addRoutineResponse = await Http.Post<WorkoutState>("routines", addRoutineRequest);
+        WorkoutState.RoutineId = addRoutineResponse.RoutineId;
+        Console.WriteLine(WorkoutState);
         LocalNavigationManager.NavigateTo("/workouts/add/set");
+    }
+
+    public void Finish()
+    {
+        Console.WriteLine("We're done here boys routines");
+        LocalNavigationManager.NavigateTo("/");
     }
 }
