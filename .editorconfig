@@ -5,3 +5,6 @@ dotnet_diagnostic.IDE0005.severity = error
 
 # CA1040: Avoid empty interfaces
 dotnet_diagnostic.CA1040.severity = none
+
+# CA2007: Consider calling ConfigureAwait on the awaited task
+dotnet_diagnostic.CA2007.severity = none
