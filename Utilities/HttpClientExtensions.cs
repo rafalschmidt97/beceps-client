@@ -8,7 +8,7 @@ namespace Beceps.Utilities
 {
     public static class HttpClientExtensions
     {
-        public static async Task<T> GetAsync<T>(this HttpClient httpClient, string url, bool setAuthenticationHeader = true)
+        public static async Task<T> Get<T>(this HttpClient httpClient, string url, bool setAuthenticationHeader = true)
         {
             httpClient.DefaultRequestHeaders
               .Accept
@@ -19,6 +19,7 @@ namespace Beceps.Utilities
 
             var response = await httpClient.SendAsync(request);
             var responseBytes = await response.Content.ReadAsByteArrayAsync();
+            request.Dispose();
             return JsonSerializer.Deserialize<T>(responseBytes, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
@@ -35,10 +36,11 @@ namespace Beceps.Utilities
 
             var response = await httpClient.SendAsync(request);
             var responseBytes = await response.Content.ReadAsByteArrayAsync();
+            request.Dispose();
             return JsonSerializer.Deserialize<T>(responseBytes, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        public static async Task<T> PutAsync<T>(this HttpClient httpClient, string url, object content, bool setAuthenticationHeader = true)
+        public static async Task<T> Put<T>(this HttpClient httpClient, string url, object content, bool setAuthenticationHeader = true)
         {
             httpClient.DefaultRequestHeaders
               .Accept
@@ -50,10 +52,11 @@ namespace Beceps.Utilities
 
             var response = await httpClient.SendAsync(request);
             var responseBytes = await response.Content.ReadAsByteArrayAsync();
+            request.Dispose();
             return JsonSerializer.Deserialize<T>(responseBytes, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        public static async Task<T> DeleteAsync<T>(this HttpClient httpClient, string url, object content, bool setAuthenticationHeader = true)
+        public static async Task<T> Delete<T>(this HttpClient httpClient, string url, object content, bool setAuthenticationHeader = true)
         {
             httpClient.DefaultRequestHeaders
               .Accept
@@ -65,6 +68,7 @@ namespace Beceps.Utilities
 
             var response = await httpClient.SendAsync(request);
             var responseBytes = await response.Content.ReadAsByteArrayAsync();
+            request.Dispose();
             return JsonSerializer.Deserialize<T>(responseBytes, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 

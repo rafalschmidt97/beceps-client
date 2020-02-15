@@ -1,0 +1,51 @@
+﻿@page "/"
+@using Beceps.Utilities
+@using System.Text.Json;
+@inject HttpClient Http
+@inject NavigationManager LocalNavigationManager
+@inject IWorkoutState WorkoutState
+
+<div class="sidebar">
+    <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
+        <a class="navbar-brand" href="">Workouts</a>
+        <button class="logout-btn navbar-toggler">
+            Logout
+            <i class="fas fa-sign-out-alt text-light" />
+        </button>
+    </div>
+</div>
+
+@if (WorkoutState.Workouts != null)
+{
+    @foreach (var workout in WorkoutState.Workouts)
+    {
+        <div class="card mt-5 mx-auto" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@workout.Name</h5>
+                <ul class="list-group">
+                    @foreach (var routine in workout.Routines)
+                    {
+                        <li class="list-group-item">@routine.WeekDay @routine.Name</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+    <button type="button" class="btn btn-primary btn-circle position-fixed" @onclick="AddWorkout">+</button>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        WorkoutState.Workouts = await Http.Get<IList<WorkoutDto>>("workouts");
+        var lul = JsonSerializer.Serialize<IWorkoutState>(WorkoutState);
+        Console.WriteLine(WorkoutState);
+        Console.WriteLine(lul);
+    }
+
+    public void AddWorkout()
+    {
+        LocalNavigationManager.NavigateTo("/workouts/add/workout");
+    }
+}

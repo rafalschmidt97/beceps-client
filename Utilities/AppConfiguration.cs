@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Beceps.Utilities
 {
-    public static class Configuration
+    public static class AppConfiguration
     {
         public static IConfigurationRoot GetConfiguration()
         {
