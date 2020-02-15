@@ -8,10 +8,17 @@ namespace Beceps.AddWorkouts.AddSet
         [StringLength(30, ErrorMessage = "Name is too long.")]
         public string Name { get; set; }
         [Required]
-        [Range(0, 10)]
-        public int? NumberOfSets { get; set; }
+        [Range(1, 10)]
+        public int SetsAmount { get; set; } = 1;
         [Required]
-        [Range(0, 100)]
-        public int? NumberOfReps { get; set; }
+        [Range(1, 100)]
+        public int RepsAmount { get; set; } = 1;
+
+        public void Reset()
+        {
+            Name = "";
+            SetsAmount = 1;
+            RepsAmount = 1;
+        }
     }
 }
