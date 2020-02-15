@@ -1,4 +1,4 @@
-﻿@page "/workouts/add/routine"
+@page "/workouts/add/routine"
 @inject NavigationManager LocalNavigationManager
 
 
@@ -17,13 +17,13 @@
     <div class="form-group mt-5">
         <label for="routineWeekDay">Day of the week</label>
         <InputSelect id="@nameof(addRoutineModel.WeekDay)" @bind-Value="@addRoutineModel.WeekDay" class="custom-select custom-select-lg">
-            <option value="@(DayOfWeek.Monday)">Monday</option>
-            <option value="@(DayOfWeek.Tuesday)">Tuesday</option>
-            <option value="@(DayOfWeek.Wednesday)">Wednesday</option>
-            <option value="@(DayOfWeek.Thursday)">Thursday</option>
-            <option value="@(DayOfWeek.Friday)">Friday</option>
-            <option value="@(DayOfWeek.Saturday)">Saturday</option>
-            <option value="@(DayOfWeek.Sunday)">Sunday</option>
+            <option value="@(WeekDay.Monday)">Monday</option>
+            <option value="@(WeekDay.Tuesday)">Tuesday</option>
+            <option value="@(WeekDay.Wednesday)">Wednesday</option>
+            <option value="@(WeekDay.Thursday)">Thursday</option>
+            <option value="@(WeekDay.Friday)">Friday</option>
+            <option value="@(WeekDay.Saturday)">Saturday</option>
+            <option value="@(WeekDay.Sunday)">Sunday</option>
         </InputSelect>
         <ValidationMessage For="@(() => addRoutineModel.WeekDay)" />
     </div>
