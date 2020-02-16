@@ -1,4 +1,4 @@
-﻿namespace Beceps.Shared
+﻿namespace Beceps.Shared.Domain
 {
     public enum WeekDay
     {

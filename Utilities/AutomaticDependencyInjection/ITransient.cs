@@ -1,4 +1,4 @@
-﻿namespace Beceps.Utilities.AutomaticDependencyInjection
+﻿ namespace Beceps.Utilities.AutomaticDependencyInjection
 {
     public interface ITransient
     {

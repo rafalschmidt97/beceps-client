@@ -1,5 +1,7 @@
 ﻿@page "/workouts/add/routine"
-@using Beceps.Utilities
+@using Beceps.Shared.Components;
+@using Beceps.Shared.Services;
+@using Beceps.Shared.Domain;
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject IWorkoutState WorkoutState

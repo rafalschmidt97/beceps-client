@@ -1,4 +1,4 @@
-﻿using Beceps.Shared;
+﻿using Beceps.Shared.Domain;
 using System.Collections.Generic;
 
 namespace Beceps.Workouts

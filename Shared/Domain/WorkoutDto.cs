@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Beceps.Shared
+namespace Beceps.Shared.Domain
 {
     public class WorkoutDto
     {

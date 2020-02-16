@@ -1,4 +1,4 @@
-﻿using Beceps.Shared;
+﻿using Beceps.Shared.Domain;
 using System.ComponentModel.DataAnnotations;
 
 namespace Beceps.AddWorkouts.AddRoutine

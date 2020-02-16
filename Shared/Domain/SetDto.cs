@@ -1,6 +1,6 @@
-﻿namespace Beceps.Shared
+﻿namespace Beceps.Shared.Domain
 {
-    public class SetDto 
+    public class SetDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Text;
 
-namespace Beceps.Utilities
+namespace Beceps.Shared.Services
 {
     public static class HttpClientExtensions
     {

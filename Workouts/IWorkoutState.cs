@@ -1,4 +1,4 @@
-﻿using Beceps.Shared;
+﻿using Beceps.Shared.Domain;
 using Beceps.Utilities.AutomaticDependencyInjection;
 using System.Collections.Generic;
 
