@@ -4,7 +4,7 @@
 @using System.Text.Json;
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
-@inject IWorkoutState WorkoutState
+@inject WorkoutState WorkoutState
 
 <div class="sidebar">
     <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
@@ -40,7 +40,7 @@
     protected override async Task OnInitializedAsync()
     {
         WorkoutState.Workouts = await Http.Get<IList<WorkoutDto>>("workouts");
-        var lul = JsonSerializer.Serialize<IWorkoutState>(WorkoutState);
+        var lul = JsonSerializer.Serialize<WorkoutState>(WorkoutState);
         Console.WriteLine(WorkoutState);
         Console.WriteLine(lul);
     }

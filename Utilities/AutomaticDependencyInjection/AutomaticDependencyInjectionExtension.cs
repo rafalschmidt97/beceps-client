@@ -11,14 +11,14 @@ namespace Beceps.Utilities.AutomaticDependencyInjection
             services.Scan(scan => scan
                 .FromAssemblies(assemblies)
                 .AddClasses(classes => classes.AssignableTo<ITransient>())
-                .AsImplementedInterfaces()
+                .AsSelfWithInterfaces()
                 .WithTransientLifetime()
                 .AddClasses(classes => classes.AssignableTo<IScoped>())
-                .AsImplementedInterfaces()
+                .AsSelfWithInterfaces()
                 .WithScopedLifetime()
                 .AddClasses(classes => classes.AssignableTo<ISingleton>())
                 .AsImplementedInterfaces()
-                .WithSingletonLifetime());
+                .AsSelfWithInterfaces());
         }
     }
 }
