@@ -18,7 +18,8 @@ namespace Beceps.Utilities.AutomaticDependencyInjection
                 .WithScopedLifetime()
                 .AddClasses(classes => classes.AssignableTo<ISingleton>())
                 .AsImplementedInterfaces()
-                .AsSelfWithInterfaces());
+                .AsSelfWithInterfaces()
+                .WithSingletonLifetime());
         }
     }
 }
