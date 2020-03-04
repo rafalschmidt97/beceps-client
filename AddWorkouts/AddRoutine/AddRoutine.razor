@@ -51,13 +51,11 @@
         var addRoutineRequest = new AddRoutineRequest(addRoutineModel.Name, (int)addRoutineModel.WeekDay, WorkoutState.WorkoutId);
         var addRoutineResponse = await Http.Post<WorkoutState>("routines", addRoutineRequest);
         WorkoutState.RoutineId = addRoutineResponse.RoutineId;
-        Console.WriteLine(WorkoutState);
         LocalNavigationManager.NavigateTo("/workouts/add/set");
     }
 
     public void Finish()
     {
-        Console.WriteLine("We're done here boys routines");
         LocalNavigationManager.NavigateTo("/");
     }
 }
