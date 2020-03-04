@@ -14,15 +14,15 @@
     </div>
 </div>
 
-@foreach (var routine in Workout.Routines)
+@foreach (var routine in Workout.Routines.Select((value, i) => new { i, value }))
 {
     <div class="container mt-4">
-        <a class="list-group-item" data-toggle="collapse" href=@($"#{routine.Name}") @onclick="Toggle">
-            <i class="@IconStyle" />
-            @routine.WeekDay @routine.Name
+        <a class="list-group-item h3" data-toggle="collapse" href=@($"#routine{routine.value.Id}") @onclick="() => Toggle(routine.i)">
+            <i class="@IconStyles[routine.i]" />
+            @routine.value.WeekDay @routine.value.Name
         </a>
-        <div class="list-group collapse" id=@($"{routine.Name}")>
-            @foreach (var set in routine.Sets)
+        <div class="list-group collapse" id=@($"routine{routine.value.Id}")>
+            @foreach (var set in routine.value.Sets)
             {
                 <a class="list-group-item">@set.Name</a>
             }
@@ -44,22 +44,27 @@
     [Parameter]
     public int WorkoutIndex { get; set; }
     public WorkoutDto Workout { get; set; }
+    public List<string> IconStyles = new List<string>();
     public string IconStyle { get; set; } = "fas fa-arrow-right";
 
     protected override void OnInitialized()
     {
         Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
+        foreach (var routine in Workout.Routines)
+        {
+            IconStyles.Add("fas fa-arrow-right");
+        }
     }
 
-    public void Toggle()
+    public void Toggle(int iconStyleIndex)
     {
-        if (IconStyle == "fas fa-arrow-right")
+        if (IconStyles[iconStyleIndex] == "fas fa-arrow-right")
         {
-            IconStyle = "fas fa-arrow-left";
+            IconStyles[iconStyleIndex] = "fas fa-arrow-left";
         }
         else
         {
-            IconStyle = "fas fa-arrow-right";
+            IconStyles[iconStyleIndex] = "fas fa-arrow-right";
         }
     }
 }
