@@ -18,13 +18,13 @@
 
 @if (WorkoutState.Workouts != null)
 {
-    @foreach (var workout in WorkoutState.Workouts)
+    @foreach (var workout in WorkoutState.Workouts.Select((value, i) => new { i, value }))
     {
-        <div class="card mt-5 mx-auto" style="width: 18rem;">
+        <div class="card mt-5 mx-auto" @onclick="(() => ViewWorkoutDetails(workout.i))">
             <div class="card-body">
-                <h5 class="card-title">@workout.Name</h5>
+                <h5 class="card-title">@workout.value.Name</h5>
                 <ul class="list-group">
-                    @foreach (var routine in workout.Routines)
+                    @foreach (var routine in workout.value.Routines)
                     {
                         <li class="list-group-item">@routine.WeekDay @routine.Name</li>
                     }
@@ -41,8 +41,12 @@
     {
         WorkoutState.Workouts = await Http.Get<IList<WorkoutDto>>("workouts");
         var lul = JsonSerializer.Serialize<WorkoutState>(WorkoutState);
-        Console.WriteLine(WorkoutState);
-        Console.WriteLine(lul);
+    }
+
+    public void ViewWorkoutDetails(int workoutIndex)
+    {
+        LocalNavigationManager.NavigateTo($"/workouts/details/{workoutIndex}");
+
     }
 
     public void AddWorkout()

@@ -1,0 +1,65 @@
+﻿@page "/workouts/details/{workoutIndex:int}"
+@using Beceps.Workouts;
+@using Beceps.Shared.Domain;
+@inject NavigationManager LocalNavigationManager
+@inject WorkoutState WorkoutState
+
+<div class="sidebar">
+    <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
+        <a class="navbar-brand" href="">@($"{Workout.Name}") </a>
+        <button class="logout-btn navbar-toggler">
+            Edit
+            <i class="fas fa-edit" />
+        </button>
+    </div>
+</div>
+
+@foreach (var routine in Workout.Routines)
+{
+    <div class="container mt-4">
+        <a class="list-group-item" data-toggle="collapse" href=@($"#{routine.Name}") @onclick="Toggle">
+            <i class="@IconStyle" />
+            @routine.WeekDay @routine.Name
+        </a>
+        <div class="list-group collapse" id=@($"{routine.Name}")>
+            @foreach (var set in routine.Sets)
+            {
+                <a class="list-group-item">@set.Name</a>
+            }
+        </div>
+    </div>
+}
+
+
+<div class="btn-group w-100 fixed-bottom" role="group" aria-label="Add or Continue">
+    <div class="half">
+        <button class="btn btn-xlg btn-warning w-100">History</button>
+    </div>
+    <div class="half">
+        <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int WorkoutIndex { get; set; }
+    public WorkoutDto Workout { get; set; }
+    public string IconStyle { get; set; } = "fas fa-arrow-right";
+
+    protected override void OnInitialized()
+    {
+        Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
+    }
+
+    public void Toggle()
+    {
+        if (IconStyle == "fas fa-arrow-right")
+        {
+            IconStyle = "fas fa-arrow-left";
+        }
+        else
+        {
+            IconStyle = "fas fa-arrow-right";
+        }
+    }
+}
