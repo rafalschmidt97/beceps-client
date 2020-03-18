@@ -1,18 +1,11 @@
 ﻿@page "/workouts/details/{workoutIndex:int}"
+@using Beceps.Shared.Components.Header;
 @using Beceps.Workouts;
 @using Beceps.Shared.Domain;
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
 
-<div class="sidebar">
-    <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
-        <a class="navbar-brand" href="">@($"{Workout.Name}") </a>
-        <button class="logout-btn navbar-toggler">
-            Edit
-            <i class="fas fa-edit" />
-        </button>
-    </div>
-</div>
+<Header Title=@($"{Workout.Name}") Icon="fa-edit" IconText="Edit"/>
 
 @foreach (var routine in Workout.Routines.Select((value, i) => new { i, value }))
 {
@@ -24,7 +17,7 @@
         <div class="list-group collapse" id=@($"routine{routine.value.Id}")>
             @foreach (var set in routine.value.Sets)
             {
-                <a class="list-group-item">@set.Name</a>
+                <a class="list-group-item">@set.Name, @set.SetsAmount sets of @set.RepsAmount reps</a>
             }
         </div>
     </div>
