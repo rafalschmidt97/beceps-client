@@ -29,7 +29,7 @@
         <button class="btn btn-xlg btn-warning w-100">History</button>
     </div>
     <div class="half">
-        <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
+        <button type="submit" class="btn btn-xlg btn-primary w-100" @onclick="Continue">Continue</button>
     </div>
 </div>
 
@@ -58,6 +58,17 @@
         else
         {
             IconStyles[iconStyleIndex] = "fas fa-arrow-right";
+        }
+    }
+
+    public void Continue()
+    {
+        for (int i = 0; i < IconStyles.Count(); i++)
+        {
+            if (IconStyles[i] == "fas fa-arrow-left")
+            {
+                LocalNavigationManager.NavigateTo($"/workout/{WorkoutIndex}/routine/{i}");
+            }
         }
     }
 }

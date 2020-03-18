@@ -1,0 +1,27 @@
+﻿@page "/workout/{workoutIndex:int}/routine/{routineIndex:int}"
+@using Beceps.Shared.Components.Header;
+@using Beceps.Shared.Domain;
+@using Beceps.Workouts
+@inject HttpClient Http
+@inject NavigationManager LocalNavigationManager
+@inject WorkoutState WorkoutState
+
+<Header Title=@($"{Set.Name} {CurrentSetIndex}/{Set.SetsAmount}") Icon="fas fa-bars" IconText="" />
+
+@code {
+    [Parameter]
+    public int WorkoutIndex { get; set; }
+    [Parameter]
+    public int RoutineIndex { get; set; }
+    public int CurrentSetIndex { get; set; } = 1;
+    public WorkoutDto Workout { get; set; }
+    public RoutineDto Routine { get; set; }
+    public SetDto Set { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
+        Routine = Workout.Routines.ElementAt(RoutineIndex);
+        Set = Routine.Sets.FirstOrDefault();
+    }
+}
