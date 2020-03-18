@@ -1,15 +1,37 @@
 ﻿@inject IJSRuntime JSRuntime;
 
-<div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
-    <a class="navbar-brand" href="">@Title</a>
-    <button class="navbar-toggler back-btn" @onclick="GoBack">
-        <i class="fas fa-arrow-left text-light" />
-    </button>
-</div>
+@if (!string.IsNullOrEmpty(IconText) && !string.IsNullOrEmpty(Icon))
+{
+    <div class="sidebar">
+        <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
+            <a class="navbar-brand" href="">@Title</a>
+            <button class="navbar-toggler back-btn" @onclick="GoBack">
+                @IconText
+                <i class=@($"fas {Icon} text-light") />
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="sidebar">
+        <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
+            <a class="navbar-brand" href="">@Title</a>
+            <button class="navbar-toggler back-btn" @onclick="GoBack">
+                <i class="fas fa-arrow-left text-light" />
+            </button>
+        </div>
+    </div>
+}
+
 
 @code {
     [Parameter]
     public string Title { get; set; }
+    [Parameter]
+    public string IconText { get; set; }
+    [Parameter]
+    public string Icon { get; set; }
 
     public async Task GoBack()
     {

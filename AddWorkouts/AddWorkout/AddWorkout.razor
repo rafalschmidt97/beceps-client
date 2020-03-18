@@ -6,9 +6,7 @@
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
 
-<div class="sidebar">
-    <Header Title="Workout" />
-</div>
+<Header Title="Workout" />
 
 <EditForm Model="@addWorkoutModel" OnValidSubmit="Continue">
     <DataAnnotationsValidator />
