@@ -70,9 +70,7 @@
 
         if (exercise != null)
         {
-            Console.WriteLine("cheburek");
             var workoutIndex = exercise.Id - 1;
-            Console.WriteLine(workoutIndex);
             var routineIndex = exercise.Routine.Id - 1;
             LocalNavigationManager.NavigateTo($"/workout/{workoutIndex}/routine/{routineIndex}");
         }

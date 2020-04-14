@@ -4,7 +4,7 @@
 {
     <div class="sidebar w-100">
         <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
-            <a class="navbar-brand" href="">@Title</a>
+            <a class="navbar-brand" style="font-size:1.3rem;" href="">@Title</a>
             <button class="navbar-toggler back-btn" @onclick="GoBack">
                 @IconText
                 <i class=@($"fas {Icon} text-light") />
@@ -16,8 +16,8 @@ else
 {
     <div class="sidebar w-100">
         <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
-            <a class="navbar-brand" style="font-size:1.3rem;">@Title</a>
-            <button class="navbar-toggler back-btn position-fixed" @onclick="GoBack">
+            <a class="navbar-brand" style="font-size:1.3rem; color: #fff">@Title</a>
+            <button class="navbar-toggler back-btn" @onclick="GoBack">
                 <i class="fas fa-arrow-left text-light" />
             </button>
         </div>
