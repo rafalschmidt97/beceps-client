@@ -2,10 +2,12 @@
 @using Beceps.Shared.Components.Header;
 @using Beceps.Workouts;
 @using Beceps.Shared.Domain;
+@using Beceps.Shared.Services;
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
+@inject HttpClient Http
 
-<Header Title=@($"{Workout.Name}") Icon="fa-edit" IconText="Edit"/>
+<Header Title=@($"{Workout.Name}") Icon="fa-edit" IconText="Edit" />
 
 @foreach (var routine in Workout.Routines.Select((value, i) => new { i, value }))
 {
@@ -29,7 +31,7 @@
         <button class="btn btn-xlg btn-warning w-100">History</button>
     </div>
     <div class="half">
-        <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
+        <button type="submit" class="btn btn-xlg btn-primary w-100" @onclick="Continue">Continue</button>
     </div>
 </div>
 
@@ -58,6 +60,21 @@
         else
         {
             IconStyles[iconStyleIndex] = "fas fa-arrow-right";
+        }
+    }
+
+    public async Task Continue()
+    {
+        var exerciseResponse = await Http.Get<IList<ExerciseResponse>>("exercises/today");
+        var exercise = exerciseResponse.FirstOrDefault();
+
+        if (exercise != null)
+        {
+            Console.WriteLine("cheburek");
+            var workoutIndex = exercise.Id - 1;
+            Console.WriteLine(workoutIndex);
+            var routineIndex = exercise.Routine.Id - 1;
+            LocalNavigationManager.NavigateTo($"/workout/{workoutIndex}/routine/{routineIndex}");
         }
     }
 }

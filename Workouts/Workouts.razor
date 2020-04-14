@@ -33,7 +33,6 @@
     protected override async Task OnInitializedAsync()
     {
         WorkoutState.Workouts = await Http.Get<IList<WorkoutDto>>("workouts");
-        var lul = JsonSerializer.Serialize<WorkoutState>(WorkoutState);
     }
 
     public void ViewWorkoutDetails(int workoutIndex)

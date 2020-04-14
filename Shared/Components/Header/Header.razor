@@ -1,8 +1,8 @@
 ﻿@inject IJSRuntime JSRuntime;
 
-@if (!string.IsNullOrEmpty(IconText) && !string.IsNullOrEmpty(Icon))
+@if (!string.IsNullOrEmpty(Icon))
 {
-    <div class="sidebar">
+    <div class="sidebar w-100">
         <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
             <a class="navbar-brand" href="">@Title</a>
             <button class="navbar-toggler back-btn" @onclick="GoBack">
@@ -14,10 +14,10 @@
 }
 else
 {
-    <div class="sidebar">
+    <div class="sidebar w-100">
         <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
-            <a class="navbar-brand" href="">@Title</a>
-            <button class="navbar-toggler back-btn" @onclick="GoBack">
+            <a class="navbar-brand" style="font-size:1.3rem;">@Title</a>
+            <button class="navbar-toggler back-btn position-fixed" @onclick="GoBack">
                 <i class="fas fa-arrow-left text-light" />
             </button>
         </div>
@@ -38,4 +38,5 @@ else
         await JSRuntime.InvokeAsync<object>("test.historyGo", -1);
     }
 }
+
 
