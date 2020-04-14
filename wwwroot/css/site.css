@@ -114,7 +114,7 @@ app {
   line-height: 1.5;
   border-radius: 0.3rem; }
 
-form .btn-group {
+.btn-group {
   position: absolute;
   bottom: 0;
   left: 0;
