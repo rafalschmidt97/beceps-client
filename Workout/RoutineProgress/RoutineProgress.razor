@@ -1,6 +1,7 @@
 ﻿@page "/workout/{workoutIndex:int}/routine/{routineIndex:int}"
 @using Beceps.Shared.Components.Header;
 @using Beceps.Shared.Domain;
+@using Beceps.Shared.Services;
 @using Beceps.Workouts
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
@@ -13,13 +14,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-xs">
-            <button type="button" class="btn btn-primary btn-circle">-</button>
+            <button type="button" class="btn btn-primary btn-circle" @onclick="SubtractRep">-</button>
         </div>
         <div class="col-xs h1 mt-3 text-white mx-1">
-            4
+            @CurrentRepsAmount
         </div>
         <div class="col-xs">
-            <button type="button" class="btn btn-primary btn-circle">+</button>
+            <button type="button" class="btn btn-primary btn-circle" @onclick="AddRep">+</button>
         </div>
     </div>
 </div>
@@ -28,17 +29,21 @@
     <div class="card-body">
         <h5 class="card-title">Exercise History</h5>
         <ul class="list-group">
-            <li class="list-group-item">Deadlift 1: 10</li>
-            <li class="list-group-item">Deadlift 2: 9</li>
-            <li class="list-group-item">Deadlift 3: 12</li>
-            <li class="list-group-item">Deadlift 4: ...</li>
+            @foreach (var set in Sets)
+            {
+                <li class="list-group-item">@set.Name : @set.Amount</li>
+            }
         </ul>
     </div>
 </div>
 
-
-<div class="position-absolute w-100" style="bottom:0; left:0;">
-    <button class="btn btn-xlg btn-warning w-100 text-center">Skip Exercise</button>
+<div class="btn-group" role="group" aria-label="Skip or Confirm">
+    <div class="half">
+        <button class="btn btn-xlg btn-warning w-100" @onclick="MoveToNextExercise">Skip</button>
+    </div>
+    <div class="half">
+        <button type="submit" class="btn btn-xlg btn-primary w-100" @onclick="Confirm">Confirm</button>
+    </div>
 </div>
 
 @code {
@@ -47,6 +52,9 @@
     [Parameter]
     public int RoutineIndex { get; set; }
     public int CurrentSetIndex { get; set; } = 1;
+    public int CurrentExerciseIndex { get; set; } = 0;
+    public int CurrentRepsAmount { get; set; } = 0;
+    public List<SetModel> Sets { get; set; } = new List<SetModel>();
     public WorkoutDto Workout { get; set; }
     public RoutineDto Routine { get; set; }
     public SetDto Set { get; set; }
@@ -56,5 +64,65 @@
         Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
         Routine = Workout.Routines.ElementAt(RoutineIndex);
         Set = Routine.Sets.FirstOrDefault();
+        SetUpSets(Set);
+    }
+
+    private void SetUpSets(SetDto set)
+    {
+        for (int i = 0; i < set.SetsAmount; i++)
+        {
+            Sets.Add(new SetModel($"{set.Name} {i + 1}"));
+        }
+    }
+
+    public void AddRep()
+    {
+        CurrentRepsAmount++;
+    }
+
+    public void SubtractRep()
+    {
+        if (CurrentRepsAmount > 0)
+        {
+            CurrentRepsAmount--;
+        }
+    }
+
+    public async Task Confirm()
+    {
+        if (CurrentRepsAmount > 1)
+        {
+            var addExersiceRequest = new AddExerciseRequest(CurrentRepsAmount, Set.Id);
+            await Http.Post<AddExerciseRequest>("exercises", addExersiceRequest);
+            Sets[CurrentSetIndex - 1].Amount = CurrentRepsAmount.ToString();
+            CurrentSetIndex++;
+            CurrentRepsAmount = 0;
+            if (CurrentSetIndex > Set.SetsAmount)
+            {
+                MoveToNextExercise();
+            }
+        }
+    }
+
+    public void MoveToNextExercise()
+    {
+        CurrentExerciseIndex++;
+        if (CurrentExerciseIndex == Routine.Sets.Count)
+        {
+            LocalNavigationManager.NavigateTo($"/");
+        }
+        else
+        {
+            Set = Routine.Sets.ElementAt(CurrentExerciseIndex);
+            CurrentSetIndex = 1;
+            Sets.Clear();
+            SetUpSets(Set);
+            return;
+        }
+    }
+
+    public void Skip()
+    {
+        MoveToNextExercise();
     }
 }
