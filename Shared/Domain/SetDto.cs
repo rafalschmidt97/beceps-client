@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public int SetsAmount { get; set; }
         public int RepsAmount { get; set; }
+        public SetStatus SetStatus { get; set; } = SetStatus.NotStarted;
     }
 }

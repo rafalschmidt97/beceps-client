@@ -1,0 +1,100 @@
+﻿@page "/workout/{workoutIndex:int}/routine/{routineIndex:int}/set-plan"
+@using Beceps.Shared.Components.Header;
+@using Beceps.Workouts;
+@using Beceps.Utilities;
+@using Beceps.Shared.Domain;
+@using Beceps.Shared.Services;
+@inject NavigationManager LocalNavigationManager
+@inject WorkoutState WorkoutState
+@inject HttpClient Http
+
+<Header Title=@($"{Workout.Name}") Icon="fa-edit" IconText="Edit" />
+
+<div class="text-center">
+    @foreach (var set in Sets.Select((value, i) => new { i, value }))
+    {
+        <div class="btn-group w-100" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-lg mt-5 text-left w-75 @GetButtonClass(set.value.SetStatus)">@set.value.Name</button>
+            <button type="button" disabled="@GetDisabled(set.value.SetStatus)" class="btn btn-info btn-sm mt-5" @onclick="() => MoveUp(set.i, set.value.SetStatus)"><i class="fas fa-chevron-up"></i></button>
+            <button type="button" disabled="@GetDisabled(set.value.SetStatus)" class="btn btn-success btn-sm mt-5" @onclick="() => MoveDown(set.i, set.value.SetStatus)"><i class="fas fa-chevron-down"></i></button>
+        </div>
+    }
+</div>
+
+<div class="btn-group bottom" role="group" aria-label="Skip or Confirm">
+    <div class="half">
+        <button class="btn btn-xlg btn-warning w-100" @onclick="Cancel">Cancel</button>
+    </div>
+    <div class="half">
+        <button type="submit" class="btn btn-xlg btn-primary w-100" @onclick="Confirm">Confirm</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int WorkoutIndex { get; set; }
+    [Parameter]
+    public int RoutineIndex { get; set; }
+    public int CurrentSetIndex { get; set; } = 1;
+    public int CurrentExerciseIndex { get; set; } = 0;
+    public int CurrentRepsAmount { get; set; } = 0;
+    public WorkoutDto Workout { get; set; }
+    public RoutineDto Routine { get; set; }
+    public SetDto Set { get; set; }
+    public IList<SetDto> Sets { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
+        Routine = Workout.Routines.ElementAt(RoutineIndex);
+        Sets = new List<SetDto>(Routine.Sets);
+        Set = Routine.Sets.FirstOrDefault();
+    }
+
+    private string GetButtonClass(SetStatus setStatus)
+    {
+        var buttonColor = "btn-primary";
+        if (setStatus == SetStatus.Done)
+        {
+            buttonColor = "btn-danger";
+        }
+        else if(setStatus == SetStatus.Started)
+        {
+            buttonColor = "btn-warning";
+        }
+
+        return buttonColor;
+    }
+
+    private bool GetDisabled(SetStatus setStatus)
+    {
+        return setStatus != SetStatus.NotStarted;
+    }
+
+    public void MoveUp(int setIndex, SetStatus setStatus)
+    {
+        if (setIndex != 0 && setStatus == SetStatus.NotStarted && Sets[setIndex-1].SetStatus == SetStatus.NotStarted)
+        {
+            Sets.Swap(setIndex, setIndex - 1);
+        }
+    }
+
+    public void MoveDown(int setIndex, SetStatus setStatus)
+    {
+        if (setIndex != Sets.Count - 1&& setStatus == SetStatus.NotStarted)
+        {
+            Sets.Swap(setIndex, setIndex + 1);
+        }
+    }
+
+    public void Cancel()
+    {
+        LocalNavigationManager.NavigateTo($"/workout/{WorkoutIndex}/routine/{RoutineIndex}");
+    }
+
+    public void Confirm()
+    {
+        WorkoutState.Workouts.ElementAt(WorkoutIndex).Routines.ElementAt(RoutineIndex).Sets = Sets;
+        LocalNavigationManager.NavigateTo($"/workout/{WorkoutIndex}/routine/{RoutineIndex}");
+    }
+}
