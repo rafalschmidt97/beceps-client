@@ -5,7 +5,7 @@
     <div class="sidebar w-100">
         <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
             <a class="navbar-brand" style="font-size:1.3rem;" href="">@Title</a>
-            <button class="navbar-toggler back-btn" @onclick="GoBack">
+            <button class="navbar-toggler back-btn" @onclick="InvokeParentMethod">
                 @IconText
                 <i class=@($"fas {Icon} text-light") />
             </button>
@@ -17,7 +17,7 @@ else
     <div class="sidebar w-100">
         <div class="top-row pl-4 navbar navbar-dark d-flex align-content-center">
             <a class="navbar-brand" style="font-size:1.3rem; color: #fff">@Title</a>
-            <button class="navbar-toggler back-btn" @onclick="GoBack">
+            <button class="navbar-toggler back-btn" @onclick="InvokeParentMethod">
                 <i class="fas fa-arrow-left text-light" />
             </button>
         </div>
@@ -32,6 +32,20 @@ else
     public string IconText { get; set; }
     [Parameter]
     public string Icon { get; set; }
+    [Parameter]
+    public Action ParentMethod { get; set; }
+
+    private async Task InvokeParentMethod()
+    {
+        if (ParentMethod != null)
+        {
+            ParentMethod.Invoke();
+        }
+        else
+        {
+            await GoBack();
+        }
+    }
 
     public async Task GoBack()
     {
