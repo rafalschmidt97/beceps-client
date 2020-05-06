@@ -28,7 +28,7 @@
 
 <div class="btn-group bottom w-100" role="group" aria-label="Add or Continue">
     <div class="half">
-        <button class="btn btn-xlg btn-warning w-100">History</button>
+        <button class="btn btn-xlg btn-warning w-100" @onclick="() => History(Workout.Id)">History</button>
     </div>
     <div class="half">
         <button type="submit" class="btn btn-xlg btn-primary w-100" @onclick="Continue">Continue</button>
@@ -74,5 +74,10 @@
             var routineIndex = exercise.Routine.Id - 1;
             LocalNavigationManager.NavigateTo($"/workout/{workoutIndex}/routine/{routineIndex}");
         }
+    }
+
+    public void History(int workoutId)
+    {
+        LocalNavigationManager.NavigateTo($"/history/{workoutId}");
     }
 }

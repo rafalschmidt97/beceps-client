@@ -17,7 +17,7 @@
 
     <div class="btn-group bottom" role="group" aria-label="Add or Continue">
         <div class="half">
-            <button class="btn btn-xlg btn-warning w-100" @onclick="Finish">Finish</button>
+            <button class="btn btn-xlg btn-warning w-100">Finish</button>
         </div>
         <div class="half">
             <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
@@ -33,10 +33,5 @@
         var workoutResponse = await Http.Post<AddWorkoutResponse>("workouts", addWorkoutModel);
         WorkoutState.WorkoutId = workoutResponse.WorkoutId;
         LocalNavigationManager.NavigateTo("/workouts/add/routine");
-    }
-
-    public void Finish()
-    {
-        //LocalNavigationManager.NavigateTo("/home");
     }
 }
