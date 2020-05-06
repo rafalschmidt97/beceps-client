@@ -1,0 +1,126 @@
+﻿@page "/history/{workoutId:int}"
+@using Beceps.Shared.Components.Header
+@using Beceps.Shared.Domain;
+@using Beceps.Shared.Services;
+@using System.Text.Json;
+@inject HttpClient Http
+@inject NavigationManager LocalNavigationManager
+
+<Header Title=@($"{Workout.Name} History")/>
+
+@foreach (var routine in Workout.Routines.Select((value, i) => new { i, value }))
+{
+    <div class="container mt-4">
+        <a class="list-group-item h3" data-toggle="collapse" href=@($"#routine{routine.value.Id}") @onclick="() => Toggle(routine.i)">
+            <i class="@IconStyles[routine.i]" />
+            @routine.value.Name
+        </a>
+        <div class="list-group collapse" id=@($"routine{routine.value.Id}")>
+            @foreach (var exercise in routine.value.Exercises)
+            {
+                <a class="list-group-item">@exercise.Name
+            @foreach (var repsAmount in exercise.RepsAmounts)
+            {
+                    <span class="float-right mr-2">@repsAmount</span>
+            }
+            </a>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int WorkoutId { get; set; }
+    public WorkoutHistory Workout { get; set; }
+    public List<string> IconStyles = new List<string>();
+    public string IconStyle { get; set; } = "fas fa-arrow-right";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Workout = new WorkoutHistory();
+        Workout.Name = "Workout 1";
+        Workout.Routines = new List<RoutineHistory>();
+        // First
+        var routine1 = new RoutineHistory();
+        routine1.Id = 1;
+        routine1.Name = "FBW1";
+        var exercise11 = new ExerciseHistory();
+        exercise11.Name = "Deadlift";
+        exercise11.RepsAmounts = new List<int> { 10, 9, 9, 8 };
+        var exercise12 = new ExerciseHistory();
+        exercise12.Name = "Dumbbell row";
+        exercise12.RepsAmounts = new List<int> { 12, 12, 12, 11 };
+        var exercise13 = new ExerciseHistory();
+        exercise13.Name = "Dumbbell press";
+        exercise13.RepsAmounts = new List<int> { 10, 9, 10, 9 };
+        var exercise14 = new ExerciseHistory();
+        exercise14.Name = "Military press";
+        exercise14.RepsAmounts = new List<int> { 10, 9, 9, 8 };
+        var exercise15 = new ExerciseHistory();
+        exercise15.Name = "Barbell bench";
+        exercise15.RepsAmounts = new List<int> { 12, 12, 12 };
+        routine1.Exercises = new List<ExerciseHistory>();
+        routine1.Exercises.AddRange(new List<ExerciseHistory>() { exercise11, exercise12, exercise13, exercise14, exercise15 });
+        Workout.Routines.Add(routine1);
+        // Second
+        var routine2 = new RoutineHistory();
+        routine2.Id = 2;
+        routine2.Name = "FBW2";
+        var exercise21 = new ExerciseHistory();
+        exercise21.Name = "Dumbbell lunge";
+        exercise21.RepsAmounts = new List<int> { 10, 10, 9, 8 };
+        var exercise22 = new ExerciseHistory();
+        exercise22.Name = "Pull-ups on a bar";
+        exercise22.RepsAmounts = new List<int> { 8, 7, 6, 6 };
+        var exercise23 = new ExerciseHistory();
+        exercise23.Name = "Barbell bench press";
+        exercise23.RepsAmounts = new List<int> { 10, 9, 10, 10 };
+        var exercise24 = new ExerciseHistory();
+        exercise24.Name = "Lateral dumbbell shrug";
+        exercise24.RepsAmounts = new List<int> { 15, 15, 15, 14 };
+        var exercise25 = new ExerciseHistory();
+        exercise25.Name = "Barbell biceps curl";
+        exercise25.RepsAmounts = new List<int> { 13, 12, 12 };
+        routine2.Exercises = new List<ExerciseHistory>();
+        routine2.Exercises.AddRange(new List<ExerciseHistory>() { exercise21, exercise22, exercise23, exercise24, exercise25 });
+        Workout.Routines.Add(routine2);
+        // Third
+        var routine3 = new RoutineHistory();
+        routine3.Id = 3;
+        routine3.Name = "FBW2";
+        var exercise31 = new ExerciseHistory();
+        exercise31.Name = "Barbell squats";
+        exercise31.RepsAmounts = new List<int> { 10, 10, 9, 8 };
+        var exercise32 = new ExerciseHistory();
+        exercise32.Name = "Bent over barbell row";
+        exercise32.RepsAmounts = new List<int> { 8, 7, 6, 6 };
+        var exercise33 = new ExerciseHistory();
+        exercise33.Name = "Incline barbell press";
+        exercise33.RepsAmounts = new List<int> { 10, 9, 10, 10 };
+        var exercise34 = new ExerciseHistory();
+        exercise34.Name = "Dumbbell overhead press";
+        exercise34.RepsAmounts = new List<int> { 15, 15, 15, 14 };
+        routine3.Exercises = new List<ExerciseHistory>();
+        routine3.Exercises.AddRange(new List<ExerciseHistory>() { exercise31, exercise32, exercise33, exercise34 });
+        Workout.Routines.Add(routine3);
+
+        foreach (var routine in Workout.Routines)
+        {
+            IconStyles.Add("fas fa-arrow-right");
+        }
+    }
+
+    public void Toggle(int iconStyleIndex)
+    {
+        if (IconStyles[iconStyleIndex] == "fas fa-arrow-right")
+        {
+            IconStyles[iconStyleIndex] = "fas fa-arrow-left";
+        }
+        else
+        {
+            IconStyles[iconStyleIndex] = "fas fa-arrow-right";
+        }
+    }
+
+}
