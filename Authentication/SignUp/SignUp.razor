@@ -1,0 +1,45 @@
+﻿@page "/sign-up"
+@using Beceps.Shared.Services;
+@inject Blazored.LocalStorage.ILocalStorageService LocalStore
+@inject HttpClient Http
+@inject NavigationManager LocalNavigationManager
+
+<h1 class="text-center text-white mt-5">BECEPS</h1>
+
+<EditForm Model="@signUpModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <InputText placeholder="Enter email" class="form-control" type="email" id="email" @bind-Value="signUpModel.Email" />
+        <ValidationMessage For="@(() => signUpModel.Email)" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <InputText type="password" class="form-control" id="password" @bind-Value="signUpModel.Password" />
+        <ValidationMessage For="@(() => signUpModel.Password)" />
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-xlg mt-4">Sign up</button>
+    </div>
+</EditForm>
+
+@code {
+    private SignUpModel signUpModel = new SignUpModel();
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            var authResponse = await Http.Post<AuthResponse>("auth/login", signUpModel);
+            await LocalStore.SetItemAsync("accessToken", authResponse.access_token);
+            LocalNavigationManager.NavigateTo("/workouts");
+        }
+        catch (Exception)
+        {
+            signUpModel.Reset();
+        }
+    }
+}
