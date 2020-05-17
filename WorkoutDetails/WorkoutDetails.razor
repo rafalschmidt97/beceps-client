@@ -7,7 +7,7 @@
 @inject WorkoutState WorkoutState
 @inject HttpClient Http
 
-<Header Title=@($"{Workout.Name}") Icon="fa-edit" IconText="Edit" />
+<Header Title=@($"{Workout.Name}") IconText="Back" />
 
 @foreach (var routine in Workout.Routines.Select((value, i) => new { i, value }))
 {
