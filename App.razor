@@ -2,7 +2,12 @@
 
 <Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <div class="d-none d-sm-block text-white text-center w-100 my-auto">
+            <h1>Please toggle the device mode toolbar with Ctrl + Shift + M and choose IPhone 6/7/8</h1>
+        </div>
+        <div class="d-block d-sm-none">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        </div>
     </Found>
     <NotFound>
         <LayoutView Layout="@typeof(MainLayout)">
