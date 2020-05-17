@@ -43,4 +43,10 @@
     {
         LocalNavigationManager.NavigateTo("/workouts/add/workout");
     }
+
+    public void Logout()
+    {
+        HttpClientExtensions.AccessToken = "";
+        LocalNavigationManager.NavigateTo($"/");
+    }
 }
