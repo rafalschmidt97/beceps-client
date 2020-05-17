@@ -35,6 +35,7 @@
         {
             var authResponse = await Http.Post<AuthResponse>("auth/login", signUpModel);
             await LocalStore.SetItemAsync("accessToken", authResponse.access_token);
+            HttpClientExtensions.AccessToken = authResponse.access_token;
             LocalNavigationManager.NavigateTo("/workouts");
         }
         catch (Exception)

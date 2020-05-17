@@ -8,6 +8,7 @@ namespace Beceps.Shared.Services
 {
     public static class HttpClientExtensions
     {
+        public static string AccessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmJmIjoxNTgxNjA0MTIyLCJyb2xlcyI6W10sImlzcyI6ImJlY2VwcyIsImV4cCI6MTcwNTA2MDkxMSwiaWF0IjoxNTgxNjA0MTIyfQ.0yeeiEcn8Z1KMm48sf0FZUvKIibatQFgyA1SFWk9xlk";
         public static async Task<T> Get<T>(this HttpClient httpClient, string url, bool setAuthenticationHeader = true)
         {
             httpClient.DefaultRequestHeaders
@@ -81,7 +82,7 @@ namespace Beceps.Shared.Services
 
             if (setAuthenticationHeader)
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmJmIjoxNTgxNjA0MTIyLCJyb2xlcyI6W10sImlzcyI6ImJlY2VwcyIsImV4cCI6MTcwNTA2MDkxMSwiaWF0IjoxNTgxNjA0MTIyfQ.0yeeiEcn8Z1KMm48sf0FZUvKIibatQFgyA1SFWk9xlk");
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
             }
 
             return request;
