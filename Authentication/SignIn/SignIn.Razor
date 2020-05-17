@@ -1,7 +1,6 @@
 ﻿@page "/"
 @using Beceps.Shared.Services;
 @using Beceps.Authentication
-@inject Blazored.LocalStorage.ILocalStorageService LocalStore
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 
@@ -36,7 +35,7 @@
         try
         {
             var authResponse = await Http.Post<AuthResponse>("auth/login", signInModel);
-            await LocalStore.SetItemAsync("accessToken", authResponse.access_token);
+            HttpClientExtensions.AccessToken = authResponse.access_token;
             LocalNavigationManager.NavigateTo("/workouts");
         }
         catch (Exception)
