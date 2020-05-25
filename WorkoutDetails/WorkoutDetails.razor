@@ -34,7 +34,7 @@
 
 <div class="btn-group bottom w-100" role="group" aria-label="Add or Continue">
     <div class="half">
-        <button class="btn btn-xlg btn-warning w-100" @onclick="() => History(Workout.Id)">History</button>
+        <button class="btn btn-xlg btn-warning w-100" @onclick="() => History(Workout.Name)">History</button>
     </div>
     <div class="half">
         <button type="submit" class="btn btn-xlg btn-primary w-100" @onclick="Continue">Continue</button>
@@ -89,8 +89,9 @@
         }
     }
 
-    public void History(int workoutId)
+    public void History(string workoutName)
     {
-        LocalNavigationManager.NavigateTo($"/history/{workoutId}");
+        Console.WriteLine(workoutName);
+        LocalNavigationManager.NavigateTo($"/history/{workoutName}");
     }
 }

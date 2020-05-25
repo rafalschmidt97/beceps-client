@@ -2,10 +2,10 @@
 
 namespace Beceps.History
 {
-    public class RoutineHistory
+    public class ExerciseDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<SetHistory> Sets { get; set; }
+        public IList<int> Reps { get; set; } = new List<int>();
     }
 }
