@@ -1,4 +1,7 @@
-﻿@using Beceps.Shared.Components
+@using Beceps.Shared.Components
+@using Beceps.Authentication.SignIn
+@inject NavigationManager LocalNavigationManager
+
 
 <Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
@@ -11,7 +14,7 @@
     </Found>
     <NotFound>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
+            <SignIn></SignIn>
         </LayoutView>
     </NotFound>
 </Router>
