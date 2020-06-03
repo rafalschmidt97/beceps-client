@@ -3,11 +3,13 @@
 @using Beceps.Shared.Domain;
 @using Beceps.Shared.Services;
 @using Beceps.Workouts
+@using Microsoft.Extensions.Configuration;
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
+@inject IConfiguration Configuration
 
-<Header Title=@($"{Set.Name} {CurrentSetIndex}/{Set.SetsAmount}") Icon="fas fa-bars" IconText="" ParentMethod="NavigateToSetPlan"/>
+<Header Title=@($"{Set.Name} {CurrentSetIndex}/{Set.SetsAmount}") Icon="fas fa-bars" IconText="" ParentMethod="NavigateToSetPlan" />
 
 <h2 class="text-center text-white mt-5">Target: @($"{Set.RepsAmount}")</h2>
 
@@ -93,7 +95,7 @@
         if (CurrentRepsAmount > 1)
         {
             var addExersiceRequest = new AddExerciseRequest(CurrentRepsAmount, Set.Id);
-            await Http.Post<AddExerciseRequest>("exercises", addExersiceRequest);
+            await Http.Post<AddExerciseRequest>($"{@Configuration["AppUrl"]}/exercises", addExersiceRequest);
             Set.SetStatus = SetStatus.Started;
             Sets[CurrentSetIndex - 1].Amount = CurrentRepsAmount.ToString();
             CurrentSetIndex++;

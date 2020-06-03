@@ -1,9 +1,11 @@
 ﻿@page "/workouts/add/set"
 @using Beceps.Shared.Components.Header;
 @using Beceps.Shared.Services;
+@using Microsoft.Extensions.Configuration;
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
+@inject IConfiguration Configuration
 
 <Header Title="Sets" />
 
@@ -44,7 +46,7 @@
     private async Task HandleValidSubmit()
     {
         var addSetRequest = new AddSetRequest(addSetModel.Name, addSetModel.SetsAmount, addSetModel.RepsAmount, WorkoutState.RoutineId);
-        await Http.Post<AddSetResponse>("sets", addSetRequest);
+        await Http.Post<AddSetResponse>($"{@Configuration["AppUrl"]}/sets", addSetRequest);
         addSetModel.Reset();
     }
 

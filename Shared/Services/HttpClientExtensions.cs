@@ -77,7 +77,7 @@ namespace Beceps.Shared.Services
         {
             var request = new HttpRequestMessage()
             {
-                RequestUri = new System.Uri($"http://localhost:8080/{url}"),
+                RequestUri = new System.Uri(url),
             };
 
             if (setAuthenticationHeader)

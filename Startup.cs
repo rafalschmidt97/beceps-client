@@ -1,6 +1,8 @@
 using Beceps.Utilities.AutomaticDependencyInjection;
 using Microsoft.AspNetCore.Components.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Beceps
 {
@@ -8,6 +10,14 @@ namespace Beceps
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            string fileName = "Beceps.wwwroot.appsettings.json";
+            var stream = Assembly.GetExecutingAssembly()
+                                 .GetManifestResourceStream(fileName);
+
+            var config = new ConfigurationBuilder()
+                    .AddJsonStream(stream)
+                    .Build();
+            services.AddSingleton<IConfiguration>(config);
             services.AddDependencies();
         }
 

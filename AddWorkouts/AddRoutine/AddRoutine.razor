@@ -2,9 +2,11 @@
 @using Beceps.Shared.Components.Header;
 @using Beceps.Shared.Services;
 @using Beceps.Shared.Domain;
+@using Microsoft.Extensions.Configuration;
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
+@inject IConfiguration Configuration
 
 <Header Title="Routine" />
 
@@ -46,7 +48,7 @@
     private async Task HandleValidSubmit()
     {
         var addRoutineRequest = new AddRoutineRequest(addRoutineModel.Name, (int)addRoutineModel.WeekDay, WorkoutState.WorkoutId);
-        var addRoutineResponse = await Http.Post<WorkoutState>("routines", addRoutineRequest);
+        var addRoutineResponse = await Http.Post<WorkoutState>($"{@Configuration["AppUrl"]}/routines", addRoutineRequest);
         WorkoutState.RoutineId = addRoutineResponse.RoutineId;
         LocalNavigationManager.NavigateTo("/workouts/add/set");
     }

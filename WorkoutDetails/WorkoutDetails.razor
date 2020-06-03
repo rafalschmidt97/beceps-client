@@ -3,9 +3,11 @@
 @using Beceps.Workouts;
 @using Beceps.Shared.Domain;
 @using Beceps.Shared.Services;
+@using Microsoft.Extensions.Configuration;
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
 @inject HttpClient Http
+@inject IConfiguration Configuration
 
 <Header Title=@($"{Workout.Name}") IconText="Back" />
 
@@ -72,7 +74,7 @@
 
     public async Task Continue()
     {
-        var exerciseResponse = await Http.Get<IList<ExerciseResponse>>("exercises/today");
+        var exerciseResponse = await Http.Get<IList<ExerciseResponse>>($"{@Configuration["AppUrl"]}/exercises/today");
         var exercise = exerciseResponse.FirstOrDefault();
         Console.WriteLine(exercise);
 

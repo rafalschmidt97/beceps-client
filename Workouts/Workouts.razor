@@ -2,9 +2,11 @@
 @using Beceps.Shared.Components.Header;
 @using Beceps.Shared.Domain;
 @using Beceps.Shared.Services;
+@using Microsoft.Extensions.Configuration;
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
+@inject IConfiguration Configuration
 
 <Header Title="Workouts" Icon="fa-sign-out-alt" IconText="Logout" />
 
@@ -31,7 +33,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        WorkoutState.Workouts = await Http.Get<IList<WorkoutDto>>("workouts");
+        WorkoutState.Workouts = await Http.Get<IList<WorkoutDto>>($"{@Configuration["AppUrl"]}/workouts");
     }
 
     public void ViewWorkoutDetails(int workoutIndex)

@@ -1,9 +1,11 @@
 ﻿@page "/workouts/add/workout"
 @using Beceps.Shared.Components.Header;
 @using Beceps.Shared.Services;
+@using Microsoft.Extensions.Configuration;
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
+@inject IConfiguration Configuration
 
 <Header Title="Workout" />
 
@@ -30,7 +32,7 @@
 
     private async Task Continue()
     {
-        var workoutResponse = await Http.Post<AddWorkoutResponse>("workouts", addWorkoutModel);
+        var workoutResponse = await Http.Post<AddWorkoutResponse>($"{@Configuration["AppUrl"]}/workouts", addWorkoutModel);
         WorkoutState.WorkoutId = workoutResponse.WorkoutId;
         LocalNavigationManager.NavigateTo("/workouts/add/routine");
     }

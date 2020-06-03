@@ -1,8 +1,10 @@
 ﻿@page "/sign-in"
 @using Beceps.Shared.Services;
 @using Beceps.Authentication
+@using Microsoft.Extensions.Configuration;
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
+@inject IConfiguration Configuration
 
 <h1 class="text-center text-white mt-5">BECEPS</h1>
 
@@ -34,7 +36,7 @@
     {
         try
         {
-            var authResponse = await Http.Post<AuthResponse>("auth/login", signInModel);
+            var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/login", signInModel);
             HttpClientExtensions.AccessToken = authResponse.access_token;
             LocalNavigationManager.NavigateTo("/workouts");
         }
