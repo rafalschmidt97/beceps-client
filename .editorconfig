@@ -1,4 +1,16 @@
-﻿[*.cs]
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = error

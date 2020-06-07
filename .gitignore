@@ -338,9 +338,3 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-
-# Custom
-App.css
-App.min.css
-site.css
-site.min.css

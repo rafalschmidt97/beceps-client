@@ -1,7 +1,6 @@
 ﻿@page "/workouts/add/workout"
-@using Beceps.Shared.Components.Header;
-@using Beceps.Shared.Services;
-@using Microsoft.Extensions.Configuration;
+@using Beceps.Shared.Services
+@using Microsoft.Extensions.Configuration
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
@@ -19,7 +18,7 @@
 
     <div class="btn-group bottom" role="group" aria-label="Add or Continue">
         <div class="half">
-            <button class="btn btn-xlg btn-warning w-100">Finish</button>
+            <button class="btn btn-xlg btn-warning w-100" @onclick="Finish">Finish</button>
         </div>
         <div class="half">
             <button type="submit" class="btn btn-xlg btn-primary w-100">Continue</button>
@@ -29,6 +28,11 @@
 
 @code{
     private AddWorkoutModel addWorkoutModel = new AddWorkoutModel();
+
+    private void Finish()
+    {
+        LocalNavigationManager.NavigateTo("/workouts");
+    }
 
     private async Task Continue()
     {

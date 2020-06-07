@@ -1,8 +1,7 @@
 ﻿@page "/workouts/add/routine"
-@using Beceps.Shared.Components.Header;
-@using Beceps.Shared.Services;
-@using Beceps.Shared.Domain;
-@using Microsoft.Extensions.Configuration;
+@using Beceps.Shared.Services
+@using Microsoft.Extensions.Configuration
+@using Beceps.Shared.Domain
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
@@ -55,6 +54,6 @@
 
     public void Finish()
     {
-        LocalNavigationManager.NavigateTo("/");
+        LocalNavigationManager.NavigateTo("/workouts");
     }
 }
