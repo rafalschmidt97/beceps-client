@@ -1,12 +1,11 @@
 ﻿@page "/history/{workoutName}"
-@using Beceps.Shared.Components.Header
-@using Beceps.Shared.Domain;
-@using Beceps.Shared.Services;
-@using System.Text.Json;
+@using Beceps.Shared.Services
+@using Microsoft.Extensions.Configuration
 @inject HttpClient Http
+@inject IConfiguration Configuration
 @inject NavigationManager LocalNavigationManager
 
-<Header Title=@($"{WorkoutName} History")/>
+<Header Title=@($"{WorkoutName} History") />
 @if (Workout != null && Exercises.Exercises.Count != 0)
 {
     <div class="w-75 mt-5 mx-auto">
@@ -35,10 +34,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var exerciseResponse = await Http.Get<IList<WorkoutHistory>>("exercises/history");
+        var exerciseResponse = await Http.Get<IList<WorkoutHistory>>($"{@Configuration["AppUrl"]}/exercises/history");
         Workout = exerciseResponse.FirstOrDefault();
         Exercises = new ExercisesCollection(exerciseResponse, WorkoutName);
-        Console.WriteLine(Exercises.Exercises.Count);
 
         for (int i = 0; i < Workout.Routines.Count; i++)
         {

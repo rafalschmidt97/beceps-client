@@ -1,9 +1,8 @@
 ﻿@page "/workouts/details/{workoutIndex:int}"
-@using Beceps.Shared.Components.Header;
-@using Beceps.Workouts;
-@using Beceps.Shared.Domain;
-@using Beceps.Shared.Services;
-@using Microsoft.Extensions.Configuration;
+@using Beceps.Shared.Services
+@using Beceps.Workouts
+@using Microsoft.Extensions.Configuration
+@using Beceps.Shared.Domain
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
 @inject HttpClient Http
@@ -76,13 +75,11 @@
     {
         var exerciseResponse = await Http.Get<IList<ExerciseResponse>>($"{@Configuration["AppUrl"]}/exercises/today");
         var exercise = exerciseResponse.FirstOrDefault();
-        Console.WriteLine(exercise);
 
         if (exercise != null)
         {
-            Console.WriteLine("kek");
             var workoutIndex = exercise.Id - 1;
-            var routineIndex = exercise.Routine.Id - 1;
+            var routineIndex = 0;
             LocalNavigationManager.NavigateTo($"/workout/{workoutIndex}/routine/{routineIndex}");
         }
         else
@@ -93,7 +90,6 @@
 
     public void History(string workoutName)
     {
-        Console.WriteLine(workoutName);
         LocalNavigationManager.NavigateTo($"/history/{workoutName}");
     }
 }

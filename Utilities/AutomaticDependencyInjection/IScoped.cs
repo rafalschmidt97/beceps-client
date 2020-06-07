@@ -1,6 +1,6 @@
 ﻿namespace Beceps.Utilities.AutomaticDependencyInjection
 {
-    interface IScoped
+    public interface IScoped
     {
     }
 }

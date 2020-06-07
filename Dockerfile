@@ -1,13 +1,22 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY Beceps.csproj .
-RUN dotnet restore Beceps.csproj
+COPY ["Beceps.csproj", ""]
+RUN dotnet restore "./Beceps.csproj"
 COPY . .
-RUN dotnet build Beceps.csproj -c Release -o /app/build
-RUN dotnet publish Beceps.csproj -c Release -o /app/publish
+WORKDIR "/src/."
+RUN dotnet build "Beceps.csproj" -c Release -o /app/build
 
-FROM nginx:alpine AS runtime
-WORKDIR /usr/share/nginx/html
-COPY --from=build /app/publish/Beceps/dist .
-COPY nginx.conf /etc/nginx/nginx.conf
-EXPOSE 80
+FROM build AS publish
+RUN dotnet publish "Beceps.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Beceps.dll"]

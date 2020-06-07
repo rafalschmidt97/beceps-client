@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.IO;
+﻿using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace Beceps.Utilities
 {
-    public static class AppConfiguration
+    public class AppConfiguration
     {
         public static IConfigurationRoot GetConfiguration()
         {

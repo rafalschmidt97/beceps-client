@@ -1,0 +1,13 @@
+﻿@page "/"
+@inject NavigationManager LocalNavigationManager
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@code{
+    protected override void OnAfterRender(bool firstRender)
+    {
+        LocalNavigationManager.NavigateTo($"/sign-in");
+    }
+}

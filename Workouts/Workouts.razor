@@ -1,8 +1,7 @@
 ﻿@page "/workouts"
-@using Beceps.Shared.Components.Header;
-@using Beceps.Shared.Domain;
-@using Beceps.Shared.Services;
-@using Microsoft.Extensions.Configuration;
+@using Beceps.Shared.Services
+@using Microsoft.Extensions.Configuration
+@using Beceps.Shared.Domain
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
@@ -26,9 +25,9 @@
             </div>
         </div>
     }
-
-    <button type="button" class="btn btn-primary btn-circle position-fixed" @onclick="AddWorkout">+</button>
 }
+
+<button type="button" class="btn btn-primary btn-circle position-fixed" @onclick="AddWorkout">+</button>
 
 @code {
     protected override async Task OnInitializedAsync()
