@@ -1,4 +1,4 @@
-﻿@page "/sign-up"
+@page "/sign-up"
 @using Beceps.Shared.Services;
 @using Microsoft.Extensions.Configuration;
 @inject HttpClient Http
@@ -34,7 +34,7 @@
     {
         try
         {
-            var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/login", signUpModel);
+            var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/login", signUpModel, false);
             HttpClientExtensions.AccessToken = authResponse.access_token;
             LocalNavigationManager.NavigateTo("/workouts");
         }

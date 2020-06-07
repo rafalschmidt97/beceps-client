@@ -39,7 +39,7 @@
     {
         try
         {
-            var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/login", signInModel);
+            var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/login", signInModel, true);
             HttpClientExtensions.AccessToken = authResponse.access_token;
             LocalNavigationManager.NavigateTo("/workouts");
         }

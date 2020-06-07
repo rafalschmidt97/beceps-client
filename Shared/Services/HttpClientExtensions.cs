@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,7 +9,7 @@ namespace Beceps.Shared.Services
 {
     public static class HttpClientExtensions
     {
-        public static string AccessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmJmIjoxNTgxNjA0MTIyLCJyb2xlcyI6W10sImlzcyI6ImJlY2VwcyIsImV4cCI6MTcwNTA2MDkxMSwiaWF0IjoxNTgxNjA0MTIyfQ.0yeeiEcn8Z1KMm48sf0FZUvKIibatQFgyA1SFWk9xlk";
+        public static string AccessToken = "";
         public static async Task<T> Get<T>(this HttpClient httpClient, string url, bool setAuthenticationHeader = true)
         {
             httpClient.DefaultRequestHeaders
@@ -81,7 +81,7 @@ namespace Beceps.Shared.Services
                 RequestUri = new Uri(url),
             };
 
-            if (setAuthenticationHeader)
+            if (setAuthenticationHeader && !string.IsNullOrEmpty(AccessToken))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
             }
