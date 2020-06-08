@@ -48,7 +48,7 @@ namespace Beceps
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseDeveloperExceptionPage();
                 app.UseHsts();
             }
 
