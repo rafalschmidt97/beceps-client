@@ -34,13 +34,16 @@
     {
         try
         {
-            var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/login", signUpModel, false);
+            var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/sign-up", signUpModel, false);
             if (string.IsNullOrEmpty(authResponse.access_token))
             {
                 signUpModel.Reset();
             }
-            HttpClientExtensions.AccessToken = authResponse.access_token;
-            LocalNavigationManager.NavigateTo("/workouts");
+            else
+            {
+                HttpClientExtensions.AccessToken = authResponse.access_token;
+                LocalNavigationManager.NavigateTo("/workouts");
+            }
         }
         catch (Exception)
         {
