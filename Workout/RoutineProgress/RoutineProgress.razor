@@ -1,4 +1,4 @@
-﻿@page "/workout/{workoutIndex:int}/routine/{routineIndex:int}"
+@page "/workout/{workoutIndex:int}/routine/{routineIndex:int}"
 @using Beceps.Shared.Components.Header;
 @using Beceps.Shared.Domain;
 @using Beceps.Shared.Services;
@@ -8,6 +8,7 @@
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
 @inject IConfiguration Configuration
+@inject IJSRuntime jsRuntime;
 
 <Header Title=@($"{Set.Name} {CurrentSetIndex}/{Set.SetsAmount}") Icon="fas fa-bars" IconText="" ParentMethod="NavigateToSetPlan" />
 
@@ -61,12 +62,20 @@
     public RoutineDto Routine { get; set; }
     public SetDto Set { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
-        Routine = Workout.Routines.ElementAt(RoutineIndex);
-        Set = Routine.Sets.FirstOrDefault(set => set.SetStatus != SetStatus.Done);
-        SetUpSets(Set);
+        try
+        {
+            Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
+            Routine = Workout.Routines.ElementAt(RoutineIndex);
+            Set = Routine.Sets.FirstOrDefault(set => set.SetStatus != SetStatus.Done);
+            SetUpSets(Set);
+        }
+        catch (Exception e)
+        {
+            await jsRuntime.InvokeAsync<string>("console.log", $"{e}");
+            throw;
+        }
     }
 
     private void SetUpSets(SetDto set)

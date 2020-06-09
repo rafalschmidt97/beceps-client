@@ -4,6 +4,7 @@
 @using Microsoft.Extensions.Configuration
 @using Beceps.Shared.Domain
 @using Beceps.Shared.Components.Header
+@inject IJSRuntime jsRuntime;
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
 @inject HttpClient Http
@@ -53,10 +54,18 @@
 
     protected override void OnInitialized()
     {
-        Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
-        foreach (var routine in Workout.Routines)
+        try
         {
-            IconStyles.Add("fas fa-arrow-right");
+            Workout = WorkoutState.Workouts.ElementAt(WorkoutIndex);
+            foreach (var routine in Workout.Routines)
+            {
+                IconStyles.Add("fas fa-arrow-right");
+            }
+        }
+        catch (Exception e)
+        {
+
+            throw;
         }
     }
 
@@ -74,18 +83,24 @@
 
     public async Task Continue()
     {
-        var exerciseResponse = await Http.Get<IList<ExerciseResponse>>($"{@Configuration["AppUrl"]}/exercises/today");
-        var exercise = exerciseResponse.FirstOrDefault();
+        try
+        {
+            var exerciseResponse = await Http.Get<IList<ExerciseResponse>>($"{@Configuration["AppUrl"]}/exercises/today");
+            var exercise = exerciseResponse.FirstOrDefault();
 
-        if (exercise != null)
-        {
-            var workoutIndex = exercise.Id - 1;
-            var routineIndex = 0;
-            LocalNavigationManager.NavigateTo($"/workout/{workoutIndex}/routine/{routineIndex}");
+            if (exercise != null && exercise.Id == Workout.Id)
+            {
+                LocalNavigationManager.NavigateTo($"/workout/{WorkoutIndex}/routine/0");
+            }
+            else
+            {
+                VisibleAlert = "";
+            }
         }
-        else
+        catch (Exception e)
         {
-            VisibleAlert = "";
+            await jsRuntime.InvokeAsync<string>("console.log", $"{e}");
+            throw;
         }
     }
 
