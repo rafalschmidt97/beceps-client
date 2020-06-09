@@ -1,4 +1,4 @@
-﻿@page "/workout/{workoutIndex:int}/routine/{routineIndex:int}/set-plan"
+@page "/workout/{workoutIndex:int}/routine/{routineIndex:int}/set-plan"
 @using Beceps.Shared.Components.Header;
 @using Beceps.Workouts;
 @using Beceps.Utilities;
@@ -8,7 +8,7 @@
 @inject WorkoutState WorkoutState
 @inject HttpClient Http
 
-<Header Title=@($"{Workout.Name}") Icon="fa-edit" IconText="Edit" />
+<Header Title=@($"{Workout.Name}")/>
 
 <div class="text-center">
     @foreach (var set in Sets.Select((value, i) => new { i, value }))
