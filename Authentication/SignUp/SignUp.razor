@@ -35,6 +35,10 @@
         try
         {
             var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/login", signUpModel, false);
+            if (string.IsNullOrEmpty(authResponse.access_token))
+            {
+                signUpModel.Reset();
+            }
             HttpClientExtensions.AccessToken = authResponse.access_token;
             LocalNavigationManager.NavigateTo("/workouts");
         }

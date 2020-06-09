@@ -7,6 +7,7 @@
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
 @inject IConfiguration Configuration
+@inject IJSRuntime jsRuntime;
 
 <Header Title="Workouts" Icon="fa-sign-out-alt" IconText="Logout" />
 
@@ -33,7 +34,23 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        WorkoutState.Workouts = await Http.Get<IList<WorkoutDto>>($"{@Configuration["AppUrl"]}/workouts");
+        try
+        {
+            Console.WriteLine("lol");
+            if (string.IsNullOrEmpty(HttpClientExtensions.AccessToken))
+            {
+                await jsRuntime.InvokeAsync<string>("console.log", $"access token is null or empty");
+            }
+            await jsRuntime.InvokeAsync<string>("console.log", $"{@Configuration["AppUrl"]}/workouts");
+            await jsRuntime.InvokeAsync<string>("console.log", $"{HttpClientExtensions.AccessToken}");
+            WorkoutState.Workouts = await Http.Get<IList<WorkoutDto>>($"{@Configuration["AppUrl"]}/workouts");
+        }
+        catch (Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+            await jsRuntime.InvokeAsync<string>("console.log", $"{e}");
+            throw;
+        }
     }
 
     public void ViewWorkoutDetails(int workoutIndex)

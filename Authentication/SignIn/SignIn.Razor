@@ -1,8 +1,9 @@
-﻿@page "/sign-in"
+@page "/sign-in"
 @using Beceps.Shared.Services
 @using Microsoft.Extensions.Configuration
 @inject HttpClient Http
 @inject NavigationManager LocalNavigationManager
+@inject IJSRuntime jsRuntime;
 @inject IConfiguration Configuration
 <h1 class="text-center text-white mt-5">BECEPS</h1>
 
@@ -22,12 +23,20 @@
         <a class="text-light mt-2" @onclick="SignUp">Don't have an account? Create one!</a>
     </div>
 
+    <div class="alert mt-5 alert-danger text-center alert-dismissible fade show @VisibleAlert" role="alert">
+        Wrong credentials.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
     <div class="text-center">
         <button type="submit" class="btn btn-primary btn-xlg mt-4">Sign in</button>
     </div>
 </EditForm>
 
 @code {
+    public string VisibleAlert = "d-none";
     private SignInModel signInModel = new SignInModel();
 
     private void SignUp()
@@ -40,10 +49,19 @@
         try
         {
             var authResponse = await Http.Post<AuthResponse>($"{@Configuration["AppUrl"]}/auth/login", signInModel, true);
-            HttpClientExtensions.AccessToken = authResponse.access_token;
-            LocalNavigationManager.NavigateTo("/workouts");
+            if (!string.IsNullOrEmpty(authResponse.access_token))
+            {
+                VisibleAlert = "d-none";
+                HttpClientExtensions.AccessToken = authResponse.access_token;
+                LocalNavigationManager.NavigateTo("/workouts");
+            }
+            else
+            {
+                VisibleAlert = "";
+                signInModel.Reset();
+            }
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             signInModel.Reset();
         }
