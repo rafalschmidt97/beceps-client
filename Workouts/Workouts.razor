@@ -9,7 +9,7 @@
 @inject IConfiguration Configuration
 @inject IJSRuntime jsRuntime;
 
-<Header Title="Workouts" Icon="fa-sign-out-alt" IconText="Logout" />
+<Header Title="Workouts" Icon="fa-sign-out-alt" IconText="Logout" ParentMethod="Logout"/>
 
 @if (WorkoutState.Workouts != null)
 {
@@ -27,6 +27,12 @@
             </div>
         </div>
     }
+}
+@if (WorkoutState.Workouts == null || WorkoutState.Workouts.Count == 0)
+{
+    <div class="text-center text-white mt-5">
+        <h1>You don't have any workouts yet</h1>
+    </div>
 }
 
 <button type="button" class="btn btn-primary btn-circle position-fixed" @onclick="AddWorkout">+</button>
