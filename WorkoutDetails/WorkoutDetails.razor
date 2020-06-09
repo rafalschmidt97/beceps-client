@@ -1,8 +1,9 @@
-﻿@page "/workouts/details/{workoutIndex:int}"
+@page "/workouts/details/{workoutIndex:int}"
 @using Beceps.Shared.Services
 @using Beceps.Workouts
 @using Microsoft.Extensions.Configuration
 @using Beceps.Shared.Domain
+@using Beceps.Shared.Components.Header
 @inject NavigationManager LocalNavigationManager
 @inject WorkoutState WorkoutState
 @inject HttpClient Http
